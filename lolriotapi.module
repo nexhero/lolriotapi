@@ -1,0 +1,62 @@
+<?php
+
+/**
+
+	Implements hook_permission().
+
+ */
+function lol_api_permission() {
+	return array(
+		'administer lol api'=>array(
+			'title'=>t('Administer League Of Legends API'),
+			'description' =>t('Configure the League Of Legends API'),
+		)
+	);
+}
+/**
+
+ 	Implements hook_menu().
+
+ */
+function lol_api_menu() {
+	$items = array();
+	$items['admin/config/lol_config'] = array(
+		'title' => 'League Of Legends API Settings',
+		'type'=>MENU_NORMAL_ITEM,
+		'page callback' => 'drupal_get_form',
+		'page arguments'=> array('lol_api_admin_page'),
+		'access arguments' => array('administer lol api')
+	);
+	return $items;
+}
+
+/**
+ * Generate form for lol_api
+ */
+function lol_api_admin_page($form, &$form_state){
+
+	$form['lol_api_key'] = array(
+		'#type' => 'textfield',
+		'#title' => t('League Of Legends Key'),
+		'#default_value' => variable_get('lol_api_key', ''),
+		'#size' => 60,
+		'#maxlength' => 128,
+
+	);
+	return system_settings_form($form);
+}
+
+/**
+
+  Implements hook_init().
+
+ */
+
+function lol_api_init() {
+	// Loading extra class
+	//Riot API Class
+	module_load_include('php', 'lol_api', 'includes/riotapi');
+	module_load_include('inc', 'lol_api', 'includes/lol_api');
+}
+
+

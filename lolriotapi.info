@@ -1,0 +1,9 @@
+name = Riot API - League Of Legends
+description = Implements League Of Legends API.
+core = 7.x
+package = League Of Legends
+configure = admin/config/lol_config
+
+; Files that contain classes.
+files[] = includes/lol_api_class.inc
+files[] = includes/lol_api_function.inc
